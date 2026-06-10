@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Caelyn — Tecnología y desarrollo de aplicaciones</title>
+<meta name="description" content="Caelyn. Estudio de tecnología y desarrollo de aplicaciones. Centro de políticas de privacidad de nuestras apps." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23111' stroke-width='4' stroke-linecap='round'%3E%3Cpath d='M18 44 A14 14 0 0 1 46 44'/%3E%3Cline x1='12' y1='44' x2='52' y2='44'/%3E%3Cline x1='32' y1='22' x2='32' y2='16'/%3E%3Cline x1='20' y1='28' x2='16' y2='23'/%3E%3Cline x1='44' y1='28' x2='48' y2='23'/%3E%3C/g%3E%3C/svg%3E" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="./">
+    <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
+      <g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round">
+        <path d="M18 44 A14 14 0 0 1 46 44" />
+        <line x1="12" y1="44" x2="52" y2="44" />
+        <line x1="32" y1="22" x2="32" y2="16" />
+        <line x1="20" y1="28" x2="16" y2="23" />
+        <line x1="44" y1="28" x2="48" y2="23" />
+      </g>
+    </svg>
+    <span class="brand-word">Caelyn</span>
+  </a>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>Caelyn</h1>
+    <p class="tagline">Tecnología y desarrollo de aplicaciones.</p>
+  </section>
+
+  <section class="policies" id="privacidad" aria-labelledby="privacidad-title">
+    <h2 id="privacidad-title">Políticas de privacidad</h2>
+    <p class="section-intro">
+      Aquí encontrarás la política de privacidad de cada aplicación de Caelyn.
+      Cada app enlaza a su documento correspondiente.
+    </p>
+
+    <ul class="policy-list">
+      <li class="policy-item">
+        <a href="privacidad/oremus.html">
+          <span class="policy-name">Oremus</span>
+          <span class="policy-desc">App de oraciones</span>
+          <span class="policy-arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+      <li class="policy-item is-soon">
+        <span class="policy-name">OpoIA</span>
+        <span class="policy-desc">Próximamente</span>
+      </li>
+    </ul>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <span>© <span id="year"></span> Caelyn</span>
+  <span class="dot" aria-hidden="true">·</span>
+  <a href="mailto:hola@caelyn.com">hola@caelyn.com</a>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

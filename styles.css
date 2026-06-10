@@ -1,0 +1,170 @@
+:root {
+  --bg: #ffffff;
+  --surface: #f7f7f5;
+  --text: #15161a;
+  --muted: #6b6d76;
+  --line: rgba(20, 22, 26, 0.1);
+  --accent: #d98a3d;
+  --max: 760px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d0e11;
+    --surface: #16181d;
+    --text: #f3f4f6;
+    --muted: #9a9ca4;
+    --line: rgba(243, 244, 246, 0.12);
+    --accent: #e9a85c;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; }
+
+.site-header {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 28px 24px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.brand-mark { width: 30px; height: 30px; }
+
+.brand-word {
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+}
+
+main {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.hero {
+  padding: 72px 0 64px;
+  border-bottom: 0.5px solid var(--line);
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: 64px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.tagline {
+  margin: 12px 0 0;
+  font-size: 19px;
+  color: var(--muted);
+}
+
+.policies { padding: 64px 0; }
+
+.policies h2 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 500;
+}
+
+.section-intro {
+  margin: 12px 0 32px;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+.policy-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.policy-item a,
+.policy-item > .policy-name {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+  background: var(--surface);
+  border: 0.5px solid var(--line);
+  border-radius: 14px;
+  text-decoration: none;
+  color: var(--text);
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.policy-item a:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.policy-name { font-size: 17px; font-weight: 500; }
+
+.policy-desc {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.policy-arrow {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 18px;
+}
+
+.policy-item.is-soon {
+  opacity: 0.55;
+}
+
+.policy-item.is-soon .policy-name {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+  background: transparent;
+  border: 0.5px dashed var(--line);
+  border-radius: 14px;
+}
+
+.site-footer {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 40px 24px 64px;
+  border-top: 0.5px solid var(--line);
+  color: var(--muted);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.site-footer a { text-decoration: none; }
+.site-footer a:hover { color: var(--text); }
+
+@media (max-width: 520px) {
+  .hero { padding: 48px 0 40px; }
+  .hero h1 { font-size: 46px; }
+}
