@@ -29,7 +29,7 @@
 
 <article class="doc">
   <h1>Política de privacidad — Constitución</h1>
-  <p class="updated">Última actualización: <!-- TODO: fecha --> [fecha]</p>
+  <p class="updated">Última actualización: <span id="updated">10/06/2026</span></p>
 
   <p class="note">
     Plantilla de partida. Revisa y completa los campos marcados como [ … ] y confirma su
@@ -78,7 +78,7 @@
   </p>
 
   <h2>7. Menores</h2>
-  <p>La aplicación no está dirigida a menores de [edad] años y no recopilamos conscientemente sus datos.</p>
+  <p>La aplicación no está dirigida a menores de 14 años y no recopilamos conscientemente sus datos.</p>
 
   <h2>8. Cambios en esta política</h2>
   <p>Podemos actualizar esta política; publicaremos cualquier cambio en esta misma página.</p>
@@ -86,5 +86,15 @@
   <h2>9. Contacto</h2>
   <p>Para cualquier duda sobre privacidad: <a href="mailto:caelyn.tech@hotmail.com">caelyn.tech@hotmail.com</a>.</p>
 </article>
+
+<script>
+  (function () {
+    var d = new Date(document.lastModified);
+    if (!isNaN(d.getTime())) {
+      document.getElementById('updated').textContent =
+        d.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    }
+  })();
+</script>
 </body>
 </html>
