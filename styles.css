@@ -12,7 +12,10 @@
 
 * { box-sizing: border-box; }
 
-html { -webkit-text-size-adjust: 100%; }
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
 
 body {
   margin: 0;
@@ -25,21 +28,95 @@ body {
 
 a { color: inherit; }
 
+/* ---------- Cielo: estrellas, fugaz y horizonte ---------- */
+
+.sky {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.stars { position: absolute; inset: -60px; will-change: transform; }
+
+.stars i {
+  position: absolute;
+  border-radius: 50%;
+  background: #cfeef3;
+  animation: twinkle 4.5s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { filter: brightness(0.7); }
+  50% { filter: brightness(1.6); }
+}
+
+.shooting {
+  position: absolute;
+  top: 14%;
+  left: -12%;
+  width: 130px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, #cfeef3);
+  opacity: 0;
+  animation: shoot 11s linear infinite 3s;
+}
+
+@keyframes shoot {
+  0% { transform: translate(0, 0) rotate(16deg); opacity: 0; }
+  2% { opacity: 0.9; }
+  7% { transform: translate(120vw, 34vh) rotate(16deg); opacity: 0; }
+  100% { transform: translate(120vw, 34vh) rotate(16deg); opacity: 0; }
+}
+
+.horizon-glow {
+  position: absolute;
+  left: 50%;
+  bottom: -32vh;
+  transform: translateX(-50%);
+  width: 150vw;
+  height: 62vh;
+  background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(63, 208, 224, 0.13), transparent 65%);
+}
+
+/* ---------- Header ---------- */
+
 .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  background: rgba(10, 22, 38, 0.6);
+  border-bottom: 0.5px solid var(--line);
+  padding: 0;
+}
+
+.site-header .brand {
   max-width: var(--max);
   margin: 0 auto;
-  padding: 28px 24px;
+  padding: 16px 24px;
+}
+
+.site-header .back {
+  display: flex;
+  align-items: center;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 16px 24px;
 }
 
 .brand {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 12px;
   text-decoration: none;
   color: var(--text);
 }
 
-.brand-mark { width: 30px; height: 30px; }
+.brand-mark { width: 28px; height: 28px; flex: none; }
 
 .brand-word {
   font-size: 19px;
@@ -58,63 +135,93 @@ a { color: inherit; }
   padding: 3px 10px;
 }
 
+/* ---------- Contenido ---------- */
+
 main {
+  position: relative;
+  z-index: 1;
   max-width: var(--max);
   margin: 0 auto;
   padding: 0 24px;
 }
 
 .hero {
-  padding: 64px 0 72px;
-  border-bottom: 0.5px solid var(--line);
+  padding: 84px 0 96px;
   text-align: center;
-  position: relative;
 }
 
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: -40px 0 auto 0;
-  height: 360px;
-  background: radial-gradient(420px 260px at 50% 30%, rgba(63, 208, 224, 0.12), transparent 70%);
-  pointer-events: none;
-}
-
-.hero-icon {
-  width: 120px;
-  height: 120px;
-  border-radius: 27px;
+.hero-mark {
   display: inline-block;
-  filter: drop-shadow(0 12px 44px rgba(63, 208, 224, 0.28));
-  position: relative;
+  will-change: transform;
+}
+
+.orbit-mark {
+  width: 168px;
+  height: 168px;
+  display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0 0 44px rgba(63, 208, 224, 0.35));
+}
+
+.sat {
+  transform-box: view-box;
+  transform-origin: 50% 50%;
+  animation: orbit 16s linear infinite;
+}
+
+@keyframes orbit {
+  to { transform: rotate(360deg); }
 }
 
 .hero h1 {
-  margin: 28px 0 0;
-  font-size: 56px;
+  margin: 34px 0 0;
+  font-size: 60px;
   font-weight: 500;
-  letter-spacing: 0.26em;
+  letter-spacing: 0.28em;
+  text-indent: 0.28em;
   text-transform: uppercase;
-  text-indent: 0.26em;
-  position: relative;
+  background: linear-gradient(180deg, #ffffff 20%, #9fd9e3);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .tagline {
-  margin: 10px 0 0;
+  margin: 12px 0 0;
   font-size: 19px;
   color: var(--muted);
-  position: relative;
 }
 
 .hero-sub {
-  margin: 18px 0 0;
+  margin: 16px 0 0;
   font-size: 15px;
   color: var(--accent);
   letter-spacing: 0.02em;
-  position: relative;
 }
 
-.policies { padding: 64px 0; }
+.hero-cta {
+  display: inline-block;
+  margin-top: 36px;
+  padding: 11px 22px;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  text-decoration: none;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(17, 32, 47, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.hero-cta:hover {
+  border-color: var(--accent);
+  background: var(--surface-2);
+  transform: translateY(-1px);
+}
+
+.policies { padding: 24px 0 80px; }
 
 .policies h2 {
   margin: 0;
@@ -141,19 +248,22 @@ main {
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 16px 20px;
-  background: var(--surface);
+  padding: 17px 20px;
+  background: rgba(17, 32, 47, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 0.5px solid var(--line);
   border-radius: 16px;
   text-decoration: none;
   color: var(--text);
-  transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .policy-item a:hover {
   border-color: var(--accent);
   background: var(--surface-2);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 34px rgba(63, 208, 224, 0.12);
 }
 
 .policy-glyph {
@@ -180,21 +290,36 @@ main {
 
 .policy-name { font-size: 17px; font-weight: 500; }
 
-.policy-desc {
-  font-size: 14px;
-  color: var(--muted);
-}
+.policy-desc { font-size: 14px; color: var(--muted); }
 
 .policy-arrow {
   margin-left: auto;
   color: var(--accent);
   font-size: 18px;
+  transition: transform 0.2s ease;
 }
 
+.policy-item a:hover .policy-arrow { transform: translateX(4px); }
+
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Footer ---------- */
+
 .site-footer {
+  position: relative;
+  z-index: 1;
   max-width: var(--max);
   margin: 0 auto;
-  padding: 40px 24px 64px;
+  padding: 36px 24px 56px;
   border-top: 0.5px solid var(--line);
   color: var(--muted);
   font-size: 14px;
@@ -206,9 +331,17 @@ main {
 .site-footer a { text-decoration: none; }
 .site-footer a:hover { color: var(--accent); }
 
+/* ---------- Movimiento reducido y móvil ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .sat, .stars i, .shooting { animation: none; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
 @media (max-width: 520px) {
-  .hero { padding: 44px 0 52px; }
-  .hero h1 { font-size: 34px; }
-  .hero-icon { width: 96px; height: 96px; border-radius: 22px; }
+  .hero { padding: 56px 0 64px; }
+  .hero h1 { font-size: 36px; }
+  .orbit-mark { width: 130px; height: 130px; }
   .policy-desc { font-size: 13px; }
 }

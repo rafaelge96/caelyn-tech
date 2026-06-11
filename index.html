@@ -5,11 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Caelyn Tech — Tecnología y desarrollo de aplicaciones</title>
 <meta name="description" content="Caelyn Tech. Estudio de tecnología y desarrollo de aplicaciones. Centro de políticas de privacidad de nuestras apps." />
-<link rel="icon" type="image/svg+xml" href="icon.svg" />
-<link rel="apple-touch-icon" href="icon.svg" />
+<link rel="icon" type="image/svg+xml" href="icon.svg?v=2" />
+<link rel="apple-touch-icon" href="icon.svg?v=2" />
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+<div class="sky" aria-hidden="true">
+  <div class="stars" id="l1"></div>
+  <div class="stars" id="l2"></div>
+  <div class="stars" id="l3"></div>
+  <div class="shooting"></div>
+  <div class="horizon-glow"></div>
+</div>
+
 <header class="site-header">
   <a class="brand" href="./">
     <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
@@ -23,10 +31,16 @@
 
 <main>
   <section class="hero">
-    <img class="hero-icon" src="icon.svg" alt="Icono de Caelyn Tech: la C de Caelyn como órbita en cian con un satélite, sobre azul noche" width="120" height="120" />
+    <div class="hero-mark" id="mark">
+      <svg class="orbit-mark" viewBox="0 0 512 512" role="img" aria-label="Marca de Caelyn Tech: la C de Caelyn como órbita con un satélite girando">
+        <path d="M362 150 A150 150 0 1 0 362 362" fill="none" stroke="#3fd0e0" stroke-width="64" stroke-linecap="round"/>
+        <g class="sat"><circle cx="406" cy="256" r="26" fill="#eaf6f8"/></g>
+      </svg>
+    </div>
     <h1>Caelyn</h1>
     <p class="tagline">Tecnología y desarrollo de aplicaciones</p>
     <p class="hero-sub">Apps cuidadas, sencillas y útiles para iOS y Android.</p>
+    <a class="hero-cta" href="#privacidad">Políticas de privacidad <span aria-hidden="true">↓</span></a>
   </section>
 
   <section class="policies" id="privacidad" aria-labelledby="privacidad-title">
@@ -36,7 +50,7 @@
     </p>
 
     <ul class="policy-list">
-      <li class="policy-item">
+      <li class="policy-item reveal">
         <a href="privacidad/oremus.html">
           <span class="policy-glyph" aria-hidden="true">O</span>
           <span class="policy-text">
@@ -46,7 +60,7 @@
           <span class="policy-arrow" aria-hidden="true">→</span>
         </a>
       </li>
-      <li class="policy-item">
+      <li class="policy-item reveal">
         <a href="privacidad/constitucion.html">
           <span class="policy-glyph" aria-hidden="true">C</span>
           <span class="policy-text">
@@ -56,7 +70,7 @@
           <span class="policy-arrow" aria-hidden="true">→</span>
         </a>
       </li>
-      <li class="policy-item">
+      <li class="policy-item reveal">
         <a href="privacidad/auxiliar-administrativo.html">
           <span class="policy-glyph" aria-hidden="true">A</span>
           <span class="policy-text">
@@ -76,6 +90,59 @@
   <a href="mailto:caelyn.tech@hotmail.com">caelyn.tech@hotmail.com</a>
 </footer>
 
-<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function makeStars(el, n, size) {
+  var html = '';
+  for (var i = 0; i < n; i++) {
+    var x = (Math.random() * 100).toFixed(2);
+    var y = (Math.random() * 100).toFixed(2);
+    var s = (size * (0.6 + Math.random() * 0.8)).toFixed(2);
+    var d = (Math.random() * 5).toFixed(2);
+    var o = (0.35 + Math.random() * 0.55).toFixed(2);
+    html += '<i style="left:' + x + '%;top:' + y + '%;width:' + s + 'px;height:' + s +
+            'px;opacity:' + o + ';animation-delay:' + d + 's"></i>';
+  }
+  el.innerHTML = html;
+}
+
+var l1 = document.getElementById('l1');
+var l2 = document.getElementById('l2');
+var l3 = document.getElementById('l3');
+var mark = document.getElementById('mark');
+makeStars(l1, 70, 1.6);
+makeStars(l2, 40, 2.4);
+makeStars(l3, 16, 3.4);
+
+if (!reduceMotion) {
+  var sy = 0, mx = 0, my = 0, raf = null;
+  function tick() {
+    if (raf) return;
+    raf = requestAnimationFrame(function () {
+      raf = null;
+      l1.style.transform = 'translate3d(' + (mx * -8) + 'px,' + (sy * 0.05 + my * -6) + 'px,0)';
+      l2.style.transform = 'translate3d(' + (mx * -18) + 'px,' + (sy * 0.11 + my * -14) + 'px,0)';
+      l3.style.transform = 'translate3d(' + (mx * -30) + 'px,' + (sy * 0.18 + my * -24) + 'px,0)';
+      mark.style.transform = 'translate3d(' + (mx * 14) + 'px,' + (my * 10) + 'px,0)';
+    });
+  }
+  window.addEventListener('scroll', function () { sy = window.scrollY; tick(); }, { passive: true });
+  window.addEventListener('mousemove', function (e) {
+    mx = (e.clientX / window.innerWidth - 0.5) * 2;
+    my = (e.clientY / window.innerHeight - 0.5) * 2;
+    tick();
+  });
+}
+
+var obs = new IntersectionObserver(function (entries) {
+  entries.forEach(function (en) {
+    if (en.isIntersecting) { en.target.classList.add('in'); obs.unobserve(en.target); }
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(function (el) { obs.observe(el); });
+</script>
 </body>
 </html>
