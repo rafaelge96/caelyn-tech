@@ -9,7 +9,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=3" />
 <link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png?v=3" />
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=3" />
-<link rel="stylesheet" href="styles.css?v=3" />
+<link rel="stylesheet" href="styles.css?v=4" />
 </head>
 <body>
 <div class="sky" aria-hidden="true">
@@ -64,7 +64,19 @@
     <a class="hero-cta" href="#privacidad">Políticas de privacidad <span aria-hidden="true">↓</span></a>
   </section>
 
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <div class="ticker-half">
+        <span>Oremus</span><b>✦</b><span>La Constitución</span><b>✦</b><span>Auxiliar Administrativo</span><b>✦</b><span>Hecho en Córdoba</span><b>✦</b><span>iOS y Android</span><b>✦</b>
+      </div>
+      <div class="ticker-half">
+        <span>Oremus</span><b>✦</b><span>La Constitución</span><b>✦</b><span>Auxiliar Administrativo</span><b>✦</b><span>Hecho en Córdoba</span><b>✦</b><span>iOS y Android</span><b>✦</b>
+      </div>
+    </div>
+  </div>
+
   <section class="policies" id="privacidad" aria-labelledby="privacidad-title">
+    <p class="eyebrow">Privacidad</p>
     <h2 id="privacidad-title">Políticas de privacidad</h2>
     <p class="section-intro">
       Cada aplicación de Caelyn Tech enlaza aquí a su política de privacidad.
@@ -166,6 +178,7 @@ if (!reduceMotion) {
       l2.style.transform = 'translate3d(' + (mx * -18) + 'px,' + (sy * 0.11 + my * -14) + 'px,0)';
       l3.style.transform = 'translate3d(' + (mx * -30) + 'px,' + (sy * 0.18 + my * -24) + 'px,0)';
       system.style.translate = (mx * 12) + 'px ' + (my * 8) + 'px';
+      system.style.transform = 'perspective(1000px) rotateX(' + (my * -5) + 'deg) rotateY(' + (mx * 5) + 'deg)';
     });
   }
   window.addEventListener('scroll', function () { sy = window.scrollY; tick(); }, { passive: true });
@@ -253,6 +266,18 @@ var obs = new IntersectionObserver(function (entries) {
   });
 }, { threshold: 0.15 });
 document.querySelectorAll('.reveal').forEach(function (el) { obs.observe(el); });
+
+if (!reduceMotion && window.matchMedia('(pointer: fine)').matches) {
+  document.querySelectorAll('.policy-item a').forEach(function (card) {
+    card.addEventListener('mousemove', function (e) {
+      var r = card.getBoundingClientRect();
+      var px = (e.clientX - r.left) / r.width - 0.5;
+      var py = (e.clientY - r.top) / r.height - 0.5;
+      card.style.transform = 'perspective(700px) rotateX(' + (py * -6) + 'deg) rotateY(' + (px * 8) + 'deg) translateY(-2px)';
+    });
+    card.addEventListener('mouseleave', function () { card.style.transform = ''; });
+  });
+}
 </script>
 </body>
 </html>

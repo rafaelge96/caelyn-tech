@@ -156,9 +156,24 @@ main {
   text-align: center;
 }
 
+.hero > * {
+  animation: fade-up 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+}
+
+.hero > *:nth-child(1) { animation-delay: 0.05s; }
+.hero > *:nth-child(2) { animation-delay: 0.15s; }
+.hero > *:nth-child(3) { animation-delay: 0.25s; }
+.hero > *:nth-child(4) { animation-delay: 0.35s; }
+.hero > *:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: none; }
+}
+
 .hero h1 {
   margin: 0;
-  font-size: 60px;
+  font-size: clamp(44px, 8.5vw, 84px);
   font-weight: 500;
   letter-spacing: 0.28em;
   text-indent: 0.28em;
@@ -171,7 +186,7 @@ main {
 
 .tagline {
   margin: 12px 0 0;
-  font-size: 19px;
+  font-size: 21px;
   color: var(--muted);
 }
 
@@ -184,6 +199,63 @@ main {
 
 /* ---------- Sistema orbital (modo satélite) ---------- */
 
+.ticker {
+  position: relative;
+  z-index: 1;
+  width: 100vw;
+  margin: 64px 0 0 calc(50% - 50vw);
+  overflow: hidden;
+  border-top: 0.5px solid var(--line);
+  border-bottom: 0.5px solid var(--line);
+  padding: 15px 0;
+  background: rgba(10, 22, 38, 0.45);
+}
+
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: tick 28s linear infinite;
+  will-change: transform;
+}
+
+.ticker-half {
+  display: inline-flex;
+  align-items: center;
+  gap: 34px;
+  padding-right: 34px;
+  flex: none;
+}
+
+.ticker span {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.ticker b {
+  color: var(--accent);
+  font-weight: 400;
+  font-size: 12px;
+}
+
+.ticker:hover .ticker-track { animation-play-state: paused; }
+
+@keyframes tick {
+  to { transform: translateX(-50%); }
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
 .system {
   --r1: 150px;
   --r2: 215px;
@@ -194,7 +266,7 @@ main {
   width: 600px;
   height: 600px;
   margin: 28px auto 0;
-  will-change: translate;
+  will-change: translate, transform;
 }
 
 .ring {
@@ -424,6 +496,9 @@ main {
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
+.policy-list .reveal:nth-child(2) { transition-delay: 0.08s; }
+.policy-list .reveal:nth-child(3) { transition-delay: 0.16s; }
+
 .reveal.in {
   opacity: 1;
   transform: none;
@@ -598,7 +673,7 @@ a.store-btn:hover {
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .sat, .stars i, .shooting, .s1, .s2, .s3, .modal-card { animation: none; }
+  .sat, .stars i, .shooting, .s1, .s2, .s3, .modal-card, .hero > *, .ticker-track { animation: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
 }
 
@@ -615,6 +690,6 @@ a.store-btn:hover {
   }
   .sat-app img { border-radius: 11px; }
   .hero { padding: 48px 0 56px; }
-  .hero h1 { font-size: 36px; }
+  .ticker { margin-top: 44px; }
   .policy-desc { font-size: 13px; }
 }
