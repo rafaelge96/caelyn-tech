@@ -28,6 +28,12 @@ body {
 
 a { color: inherit; }
 
+img {
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
 /* ---------- Cielo: estrellas, fugaz y horizonte ---------- */
 
 .sky {
@@ -146,35 +152,12 @@ main {
 }
 
 .hero {
-  padding: 84px 0 96px;
+  padding: 64px 0 72px;
   text-align: center;
 }
 
-.hero-mark {
-  display: inline-block;
-  will-change: transform;
-}
-
-.orbit-mark {
-  width: 168px;
-  height: 168px;
-  display: block;
-  margin: 0 auto;
-  filter: drop-shadow(0 0 44px rgba(63, 208, 224, 0.35));
-}
-
-.sat {
-  transform-box: view-box;
-  transform-origin: 50% 50%;
-  animation: orbit 16s linear infinite;
-}
-
-@keyframes orbit {
-  to { transform: rotate(360deg); }
-}
-
 .hero h1 {
-  margin: 34px 0 0;
+  margin: 0;
   font-size: 60px;
   font-weight: 500;
   letter-spacing: 0.28em;
@@ -193,15 +176,185 @@ main {
 }
 
 .hero-sub {
-  margin: 16px 0 0;
+  margin: 14px 0 0;
   font-size: 15px;
   color: var(--accent);
   letter-spacing: 0.02em;
 }
 
+/* ---------- Sistema orbital (modo satélite) ---------- */
+
+.system {
+  position: relative;
+  width: 600px;
+  height: 600px;
+  margin: 28px auto 0;
+  will-change: translate;
+}
+
+.ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px dashed rgba(63, 208, 224, 0.16);
+  border-radius: 50%;
+}
+
+.r1 { width: 300px; height: 300px; }
+.r2 { width: 430px; height: 430px; }
+.r3 { width: 560px; height: 560px; }
+
+.system-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.orbit-mark {
+  width: 150px;
+  height: 150px;
+  display: block;
+  filter: drop-shadow(0 0 44px rgba(63, 208, 224, 0.35));
+}
+
+.sat {
+  transform-box: view-box;
+  transform-origin: 50% 50%;
+  animation: orbit 16s linear infinite;
+}
+
+@keyframes orbit {
+  to { transform: rotate(360deg); }
+}
+
+.sat-app {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 56px;
+  height: 56px;
+  margin: -28px 0 0 -28px;
+  text-decoration: none;
+  color: var(--text);
+  z-index: 2;
+}
+
+.sat-app img {
+  display: block;
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  border: 1px solid rgba(160, 200, 220, 0.25);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sat-app:hover img,
+.sat-app:focus-visible img {
+  transform: scale(1.12);
+  box-shadow: 0 8px 30px rgba(63, 208, 224, 0.35);
+}
+
+.sat-app span {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 8px;
+  font-size: 12px;
+  white-space: nowrap;
+  background: rgba(10, 22, 38, 0.85);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 10px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.sat-app:hover span,
+.sat-app:focus-visible span { opacity: 1; }
+
+.s1 {
+  transform: rotate(30deg) translateX(150px) rotate(-30deg);
+  animation: orb1 22s linear infinite;
+}
+
+.s2 {
+  transform: rotate(160deg) translateX(215px) rotate(-160deg);
+  animation: orb2 34s linear infinite;
+}
+
+.s3 {
+  transform: rotate(265deg) translateX(280px) rotate(-265deg);
+  animation: orb3 48s linear infinite;
+}
+
+@keyframes orb1 {
+  from { transform: rotate(30deg) translateX(150px) rotate(-30deg); }
+  to { transform: rotate(390deg) translateX(150px) rotate(-390deg); }
+}
+
+@keyframes orb2 {
+  from { transform: rotate(160deg) translateX(215px) rotate(-160deg); }
+  to { transform: rotate(520deg) translateX(215px) rotate(-520deg); }
+}
+
+@keyframes orb3 {
+  from { transform: rotate(265deg) translateX(280px) rotate(-265deg); }
+  to { transform: rotate(625deg) translateX(280px) rotate(-625deg); }
+}
+
+.system:hover .sat-app,
+.system:hover .sat,
+.system:focus-within .sat-app,
+.system:focus-within .sat {
+  animation-play-state: paused;
+}
+
+/* ---------- Scroll de apps (móvil) ---------- */
+
+.apps-scroll {
+  display: none;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 30px 4px 10px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.apps-scroll::-webkit-scrollbar { display: none; }
+
+.app-card {
+  scroll-snap-align: center;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  min-width: 128px;
+  padding: 18px 20px;
+  font-size: 14px;
+  background: rgba(17, 32, 47, 0.55);
+  border: 0.5px solid var(--line);
+  border-radius: 18px;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.app-card img {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  border: 1px solid rgba(160, 200, 220, 0.25);
+}
+
 .hero-cta {
   display: inline-block;
-  margin-top: 36px;
+  margin-top: 34px;
   padding: 11px 22px;
   font-size: 14px;
   letter-spacing: 0.04em;
@@ -220,6 +373,8 @@ main {
   background: var(--surface-2);
   transform: translateY(-1px);
 }
+
+/* ---------- Políticas ---------- */
 
 .policies { padding: 24px 0 80px; }
 
@@ -266,19 +421,12 @@ main {
   box-shadow: 0 10px 34px rgba(63, 208, 224, 0.12);
 }
 
-.policy-glyph {
+.policy-icon {
   flex: none;
   width: 44px;
   height: 44px;
   border-radius: 12px;
-  background: var(--accent-soft);
-  border: 1px solid rgba(63, 208, 224, 0.25);
-  color: var(--accent);
-  font-size: 18px;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border: 1px solid rgba(160, 200, 220, 0.25);
 }
 
 .policy-text {
@@ -335,13 +483,14 @@ main {
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .sat, .stars i, .shooting { animation: none; }
+  .sat, .stars i, .shooting, .s1, .s2, .s3 { animation: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
 }
 
-@media (max-width: 520px) {
-  .hero { padding: 56px 0 64px; }
+@media (max-width: 700px) {
+  .system { display: none; }
+  .apps-scroll { display: flex; }
+  .hero { padding: 48px 0 56px; }
   .hero h1 { font-size: 36px; }
-  .orbit-mark { width: 130px; height: 130px; }
   .policy-desc { font-size: 13px; }
 }

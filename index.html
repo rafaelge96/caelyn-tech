@@ -31,15 +31,49 @@
 
 <main>
   <section class="hero">
-    <div class="hero-mark" id="mark">
-      <svg class="orbit-mark" viewBox="0 0 512 512" role="img" aria-label="Marca de Caelyn Tech: la C de Caelyn como órbita con un satélite girando">
-        <path d="M362 150 A150 150 0 1 0 362 362" fill="none" stroke="#3fd0e0" stroke-width="64" stroke-linecap="round"/>
-        <g class="sat"><circle cx="406" cy="256" r="26" fill="#eaf6f8"/></g>
-      </svg>
-    </div>
     <h1>Caelyn</h1>
     <p class="tagline">Tecnología y desarrollo de aplicaciones</p>
     <p class="hero-sub">Apps cuidadas, sencillas y útiles para iOS y Android.</p>
+
+    <div class="system" id="system" aria-label="Nuestras aplicaciones orbitando la marca Caelyn">
+      <div class="ring r1" aria-hidden="true"></div>
+      <div class="ring r2" aria-hidden="true"></div>
+      <div class="ring r3" aria-hidden="true"></div>
+      <div class="system-center" aria-hidden="true">
+        <svg class="orbit-mark" viewBox="0 0 512 512">
+          <path d="M362 150 A150 150 0 1 0 362 362" fill="none" stroke="#3fd0e0" stroke-width="64" stroke-linecap="round"/>
+          <g class="sat"><circle cx="406" cy="256" r="26" fill="#eaf6f8"/></g>
+        </svg>
+      </div>
+      <a class="sat-app s1" href="privacidad/oremus.html" aria-label="Oremus — ver política de privacidad">
+        <img src="assets/apps/oremus.png" alt="" width="56" height="56" />
+        <span>Oremus</span>
+      </a>
+      <a class="sat-app s2" href="privacidad/constitucion.html" aria-label="Constitución — ver política de privacidad">
+        <img src="assets/apps/constitucion.png" alt="" width="56" height="56" />
+        <span>Constitución</span>
+      </a>
+      <a class="sat-app s3" href="privacidad/auxiliar-administrativo.html" aria-label="Auxiliar Administrativo — ver política de privacidad">
+        <img src="assets/apps/auxiliar-administrativo.png" alt="" width="56" height="56" />
+        <span>Auxiliar Administrativo</span>
+      </a>
+    </div>
+
+    <div class="apps-scroll" aria-label="Nuestras aplicaciones">
+      <a class="app-card" href="privacidad/oremus.html">
+        <img src="assets/apps/oremus.png" alt="" width="64" height="64" />
+        <span>Oremus</span>
+      </a>
+      <a class="app-card" href="privacidad/constitucion.html">
+        <img src="assets/apps/constitucion.png" alt="" width="64" height="64" />
+        <span>Constitución</span>
+      </a>
+      <a class="app-card" href="privacidad/auxiliar-administrativo.html">
+        <img src="assets/apps/auxiliar-administrativo.png" alt="" width="64" height="64" />
+        <span>Auxiliar Admin.</span>
+      </a>
+    </div>
+
     <a class="hero-cta" href="#privacidad">Políticas de privacidad <span aria-hidden="true">↓</span></a>
   </section>
 
@@ -52,7 +86,7 @@
     <ul class="policy-list">
       <li class="policy-item reveal">
         <a href="privacidad/oremus.html">
-          <span class="policy-glyph" aria-hidden="true">O</span>
+          <img class="policy-icon" src="assets/apps/oremus.png" alt="" width="44" height="44" />
           <span class="policy-text">
             <span class="policy-name">Oremus</span>
             <span class="policy-desc">App de oraciones</span>
@@ -62,7 +96,7 @@
       </li>
       <li class="policy-item reveal">
         <a href="privacidad/constitucion.html">
-          <span class="policy-glyph" aria-hidden="true">C</span>
+          <img class="policy-icon" src="assets/apps/constitucion.png" alt="" width="44" height="44" />
           <span class="policy-text">
             <span class="policy-name">Constitución</span>
             <span class="policy-desc">Estudio de la Constitución Española</span>
@@ -72,7 +106,7 @@
       </li>
       <li class="policy-item reveal">
         <a href="privacidad/auxiliar-administrativo.html">
-          <span class="policy-glyph" aria-hidden="true">A</span>
+          <img class="policy-icon" src="assets/apps/auxiliar-administrativo.png" alt="" width="44" height="44" />
           <span class="policy-text">
             <span class="policy-name">Auxiliar Administrativo</span>
             <span class="policy-desc">Preparación de oposiciones</span>
@@ -93,6 +127,11 @@
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
 
+document.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+document.addEventListener('dragstart', function (e) {
+  if (e.target && e.target.tagName === 'IMG') e.preventDefault();
+});
+
 var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function makeStars(el, n, size) {
@@ -112,7 +151,7 @@ function makeStars(el, n, size) {
 var l1 = document.getElementById('l1');
 var l2 = document.getElementById('l2');
 var l3 = document.getElementById('l3');
-var mark = document.getElementById('mark');
+var system = document.getElementById('system');
 makeStars(l1, 70, 1.6);
 makeStars(l2, 40, 2.4);
 makeStars(l3, 16, 3.4);
@@ -126,7 +165,7 @@ if (!reduceMotion) {
       l1.style.transform = 'translate3d(' + (mx * -8) + 'px,' + (sy * 0.05 + my * -6) + 'px,0)';
       l2.style.transform = 'translate3d(' + (mx * -18) + 'px,' + (sy * 0.11 + my * -14) + 'px,0)';
       l3.style.transform = 'translate3d(' + (mx * -30) + 'px,' + (sy * 0.18 + my * -24) + 'px,0)';
-      mark.style.transform = 'translate3d(' + (mx * 14) + 'px,' + (my * 10) + 'px,0)';
+      system.style.translate = (mx * 12) + 'px ' + (my * 8) + 'px';
     });
   }
   window.addEventListener('scroll', function () { sy = window.scrollY; tick(); }, { passive: true });
