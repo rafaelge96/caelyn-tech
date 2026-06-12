@@ -185,6 +185,11 @@ main {
 /* ---------- Sistema orbital (modo satélite) ---------- */
 
 .system {
+  --r1: 150px;
+  --r2: 215px;
+  --r3: 280px;
+  --icon: 56px;
+  --mark: 150px;
   position: relative;
   width: 600px;
   height: 600px;
@@ -201,9 +206,9 @@ main {
   border-radius: 50%;
 }
 
-.r1 { width: 300px; height: 300px; }
-.r2 { width: 430px; height: 430px; }
-.r3 { width: 560px; height: 560px; }
+.r1 { width: calc(var(--r1) * 2); height: calc(var(--r1) * 2); }
+.r2 { width: calc(var(--r2) * 2); height: calc(var(--r2) * 2); }
+.r3 { width: calc(var(--r3) * 2); height: calc(var(--r3) * 2); }
 
 .system-center {
   position: absolute;
@@ -213,8 +218,8 @@ main {
 }
 
 .orbit-mark {
-  width: 150px;
-  height: 150px;
+  width: var(--mark);
+  height: var(--mark);
   display: block;
   filter: drop-shadow(0 0 44px rgba(63, 208, 224, 0.35));
 }
@@ -233,9 +238,9 @@ main {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 56px;
-  height: 56px;
-  margin: -28px 0 0 -28px;
+  width: var(--icon);
+  height: var(--icon);
+  margin: calc(var(--icon) / -2) 0 0 calc(var(--icon) / -2);
   text-decoration: none;
   color: var(--text);
   z-index: 2;
@@ -243,8 +248,8 @@ main {
 
 .sat-app img {
   display: block;
-  width: 56px;
-  height: 56px;
+  width: 100%;
+  height: 100%;
   border-radius: 14px;
   border: 1px solid rgba(160, 200, 220, 0.25);
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
@@ -278,78 +283,42 @@ main {
 .sat-app:focus-visible span { opacity: 1; }
 
 .s1 {
-  transform: rotate(30deg) translateX(150px) rotate(-30deg);
+  transform: rotate(30deg) translateX(var(--r1)) rotate(-30deg);
   animation: orb1 22s linear infinite;
 }
 
 .s2 {
-  transform: rotate(160deg) translateX(215px) rotate(-160deg);
+  transform: rotate(160deg) translateX(var(--r2)) rotate(-160deg);
   animation: orb2 34s linear infinite;
 }
 
 .s3 {
-  transform: rotate(265deg) translateX(280px) rotate(-265deg);
+  transform: rotate(265deg) translateX(var(--r3)) rotate(-265deg);
   animation: orb3 48s linear infinite;
 }
 
 @keyframes orb1 {
-  from { transform: rotate(30deg) translateX(150px) rotate(-30deg); }
-  to { transform: rotate(390deg) translateX(150px) rotate(-390deg); }
+  from { transform: rotate(30deg) translateX(var(--r1)) rotate(-30deg); }
+  to { transform: rotate(390deg) translateX(var(--r1)) rotate(-390deg); }
 }
 
 @keyframes orb2 {
-  from { transform: rotate(160deg) translateX(215px) rotate(-160deg); }
-  to { transform: rotate(520deg) translateX(215px) rotate(-520deg); }
+  from { transform: rotate(160deg) translateX(var(--r2)) rotate(-160deg); }
+  to { transform: rotate(520deg) translateX(var(--r2)) rotate(-520deg); }
 }
 
 @keyframes orb3 {
-  from { transform: rotate(265deg) translateX(280px) rotate(-265deg); }
-  to { transform: rotate(625deg) translateX(280px) rotate(-625deg); }
+  from { transform: rotate(265deg) translateX(var(--r3)) rotate(-265deg); }
+  to { transform: rotate(625deg) translateX(var(--r3)) rotate(-625deg); }
 }
 
 .system:hover .sat-app,
 .system:hover .sat,
 .system:focus-within .sat-app,
-.system:focus-within .sat {
+.system:focus-within .sat,
+.system.paused .sat-app,
+.system.paused .sat {
   animation-play-state: paused;
-}
-
-/* ---------- Scroll de apps (móvil) ---------- */
-
-.apps-scroll {
-  display: none;
-  gap: 12px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding: 30px 4px 10px;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
-
-.apps-scroll::-webkit-scrollbar { display: none; }
-
-.app-card {
-  scroll-snap-align: center;
-  flex: 0 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  min-width: 128px;
-  padding: 18px 20px;
-  font-size: 14px;
-  background: rgba(17, 32, 47, 0.55);
-  border: 0.5px solid var(--line);
-  border-radius: 18px;
-  text-decoration: none;
-  color: var(--text);
-}
-
-.app-card img {
-  width: 64px;
-  height: 64px;
-  border-radius: 16px;
-  border: 1px solid rgba(160, 200, 220, 0.25);
 }
 
 .hero-cta {
@@ -488,8 +457,17 @@ main {
 }
 
 @media (max-width: 700px) {
-  .system { display: none; }
-  .apps-scroll { display: flex; }
+  .system {
+    --r1: 78px;
+    --r2: 112px;
+    --r3: 146px;
+    --icon: 42px;
+    --mark: 88px;
+    width: 340px;
+    height: 340px;
+    margin-top: 18px;
+  }
+  .sat-app img { border-radius: 11px; }
   .hero { padding: 48px 0 56px; }
   .hero h1 { font-size: 36px; }
   .policy-desc { font-size: 13px; }

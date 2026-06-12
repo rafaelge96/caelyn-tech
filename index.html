@@ -59,21 +59,6 @@
       </a>
     </div>
 
-    <div class="apps-scroll" aria-label="Nuestras aplicaciones">
-      <a class="app-card" href="privacidad/oremus.html">
-        <img src="assets/apps/oremus.png" alt="" width="64" height="64" />
-        <span>Oremus</span>
-      </a>
-      <a class="app-card" href="privacidad/constitucion.html">
-        <img src="assets/apps/constitucion.png" alt="" width="64" height="64" />
-        <span>Constitución</span>
-      </a>
-      <a class="app-card" href="privacidad/auxiliar-administrativo.html">
-        <img src="assets/apps/auxiliar-administrativo.png" alt="" width="64" height="64" />
-        <span>Auxiliar Admin.</span>
-      </a>
-    </div>
-
     <a class="hero-cta" href="#privacidad">Políticas de privacidad <span aria-hidden="true">↓</span></a>
   </section>
 
@@ -175,6 +160,13 @@ if (!reduceMotion) {
     tick();
   });
 }
+
+var pauseTimer = null;
+system.addEventListener('touchstart', function () {
+  system.classList.add('paused');
+  clearTimeout(pauseTimer);
+  pauseTimer = setTimeout(function () { system.classList.remove('paused'); }, 4000);
+}, { passive: true });
 
 var obs = new IntersectionObserver(function (entries) {
   entries.forEach(function (en) {
