@@ -45,15 +45,15 @@
           <g class="sat"><circle cx="406" cy="256" r="26" fill="#eaf6f8"/></g>
         </svg>
       </div>
-      <a class="sat-app s1" href="privacidad/oremus.html" aria-label="Oremus — ver política de privacidad">
+      <a class="sat-app s1" href="privacidad/oremus.html" data-app="oremus" aria-label="Oremus — información de la app">
         <img src="assets/apps/oremus.png" alt="" width="56" height="56" />
         <span>Oremus</span>
       </a>
-      <a class="sat-app s2" href="privacidad/constitucion.html" aria-label="Constitución — ver política de privacidad">
+      <a class="sat-app s2" href="privacidad/constitucion.html" data-app="constitucion" aria-label="Constitución — información de la app">
         <img src="assets/apps/constitucion.png" alt="" width="56" height="56" />
         <span>Constitución</span>
       </a>
-      <a class="sat-app s3" href="privacidad/auxiliar-administrativo.html" aria-label="Auxiliar Administrativo — ver política de privacidad">
+      <a class="sat-app s3" href="privacidad/auxiliar-administrativo.html" data-app="auxiliar" aria-label="Auxiliar Administrativo — información de la app">
         <img src="assets/apps/auxiliar-administrativo.png" alt="" width="56" height="56" />
         <span>Auxiliar Administrativo</span>
       </a>
@@ -102,6 +102,19 @@
     </ul>
   </section>
 </main>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-name" hidden>
+  <div class="modal-backdrop"></div>
+  <div class="modal-card">
+    <button class="modal-close" type="button" aria-label="Cerrar">×</button>
+    <img id="modal-icon" src="" alt="" width="72" height="72" />
+    <h3 id="modal-name"></h3>
+    <p id="modal-desc"></p>
+    <span class="soon-pill" id="modal-soon">Próximamente disponible</span>
+    <div class="store-buttons" id="modal-stores"></div>
+    <a id="modal-policy" class="modal-policy" href="#">Política de privacidad →</a>
+  </div>
+</div>
 
 <footer class="site-footer">
   <span>© <span id="year"></span> Caelyn Tech</span>
@@ -160,6 +173,70 @@ if (!reduceMotion) {
     tick();
   });
 }
+
+var APPS = {
+  oremus: {
+    name: 'Oremus', desc: 'App de oraciones',
+    icon: 'assets/apps/oremus.png', policy: 'privacidad/oremus.html',
+    play: null, ios: null
+  },
+  constitucion: {
+    name: 'Constitución', desc: 'Estudio de la Constitución Española',
+    icon: 'assets/apps/constitucion.png', policy: 'privacidad/constitucion.html',
+    play: null, ios: null
+  },
+  auxiliar: {
+    name: 'Auxiliar Administrativo', desc: 'Preparación de oposiciones',
+    icon: 'assets/apps/auxiliar-administrativo.png', policy: 'privacidad/auxiliar-administrativo.html',
+    play: null, ios: null
+  }
+};
+
+var modal = document.getElementById('modal');
+var lastFocus = null;
+
+function openModal(key) {
+  var app = APPS[key];
+  if (!app) return;
+  document.getElementById('modal-icon').src = app.icon;
+  document.getElementById('modal-name').textContent = app.name;
+  document.getElementById('modal-desc').textContent = app.desc;
+  document.getElementById('modal-policy').href = app.policy;
+  document.getElementById('modal-soon').hidden = !!(app.play || app.ios);
+  var stores = document.getElementById('modal-stores');
+  stores.innerHTML = '';
+  [['play', 'Google Play'], ['ios', 'App Store']].forEach(function (s) {
+    var url = app[s[0]], el;
+    if (url) {
+      el = document.createElement('a');
+      el.href = url; el.target = '_blank'; el.rel = 'noopener';
+      el.className = 'store-btn';
+      el.innerHTML = '<small>Disponible en</small><strong>' + s[1] + '</strong>';
+    } else {
+      el = document.createElement('span');
+      el.className = 'store-btn disabled';
+      el.innerHTML = '<small>Próximamente en</small><strong>' + s[1] + '</strong>';
+    }
+    stores.appendChild(el);
+  });
+  lastFocus = document.activeElement;
+  modal.hidden = false;
+  modal.querySelector('.modal-close').focus();
+}
+
+function closeModal() {
+  modal.hidden = true;
+  if (lastFocus) lastFocus.focus();
+}
+
+document.querySelectorAll('.sat-app').forEach(function (a) {
+  a.addEventListener('click', function (e) { e.preventDefault(); openModal(a.dataset.app); });
+});
+modal.querySelector('.modal-close').addEventListener('click', closeModal);
+modal.querySelector('.modal-backdrop').addEventListener('click', closeModal);
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape' && !modal.hidden) closeModal();
+});
 
 var pauseTimer = null;
 system.addEventListener('touchstart', function () {
