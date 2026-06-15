@@ -369,6 +369,11 @@ main {
   animation: orb3 48s linear infinite;
 }
 
+.s4 {
+  transform: rotate(40deg) translateX(var(--r2)) rotate(-40deg);
+  animation: orb4 40s linear infinite;
+}
+
 @keyframes orb1 {
   from { transform: rotate(30deg) translateX(var(--r1)) rotate(-30deg); }
   to { transform: rotate(390deg) translateX(var(--r1)) rotate(-390deg); }
@@ -382,6 +387,11 @@ main {
 @keyframes orb3 {
   from { transform: rotate(265deg) translateX(var(--r3)) rotate(-265deg); }
   to { transform: rotate(625deg) translateX(var(--r3)) rotate(-625deg); }
+}
+
+@keyframes orb4 {
+  from { transform: rotate(40deg) translateX(var(--r2)) rotate(-40deg); }
+  to { transform: rotate(400deg) translateX(var(--r2)) rotate(-400deg); }
 }
 
 .system:hover .sat-app,
@@ -673,7 +683,7 @@ a.store-btn:hover {
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .sat, .stars i, .shooting, .s1, .s2, .s3, .modal-card, .hero > *, .ticker-track { animation: none; }
+  .sat, .stars i, .shooting, .s1, .s2, .s3, .s4, .modal-card, .hero > *, .ticker-track { animation: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
 }
 
